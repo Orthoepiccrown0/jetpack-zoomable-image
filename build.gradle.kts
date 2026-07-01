@@ -51,24 +51,4 @@ publishing {
         }
     }
 
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            val configuredUrl = providers.gradleProperty("zoomableImage.githubPackagesUrl")
-            val repository = providers.gradleProperty("gpr.repository")
-                .orElse(providers.environmentVariable("GITHUB_REPOSITORY"))
-            url = uri(
-                configuredUrl.orNull
-                    ?: "https://maven.pkg.github.com/${repository.orNull ?: "Orthoepiccrown0/jetpack-zoomable-image"}"
-            )
-            credentials {
-                username = providers.gradleProperty("gpr.user")
-                    .orElse(providers.environmentVariable("GITHUB_ACTOR"))
-                    .orNull
-                password = providers.gradleProperty("gpr.key")
-                    .orElse(providers.environmentVariable("GITHUB_TOKEN"))
-                    .orNull
-            }
-        }
-    }
 }

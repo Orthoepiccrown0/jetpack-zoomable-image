@@ -24,33 +24,41 @@ The library is designed for product screens that need image inspection rather th
 
 ## Installation
 
-Add the dependency:
-
-```kotlin
-implementation("com.epiccrown:zoomable-image:0.1.0")
-```
-
-If you consume the artifact from GitHub Packages, add the Maven repository to your dependency resolution settings:
+Add JitPack in `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url = uri("https://maven.pkg.github.com/Orthoepiccrown0/jetpack-zoomable-image")
-            credentials {
-                username = providers.gradleProperty("gpr.user").orNull
-                    ?: System.getenv("GITHUB_ACTOR")
-                password = providers.gradleProperty("gpr.key").orNull
-                    ?: System.getenv("GITHUB_TOKEN")
+        maven("https://jitpack.io") {
+            content {
+                includeGroup("com.epiccrown")
             }
         }
     }
 }
 ```
 
-GitHub Packages may require authenticated reads even for public packages, so provide a token with package read access when resolving from that registry.
+Add the dependency in `gradle/libs.versions.toml`:
+
+```toml
+[versions]
+zoomable-image = "0.1.0"
+
+[libraries]
+epiccrown-jetpack-image = { group = "com.epiccrown", name = "zoomable-image", version.ref = "zoomable-image" }
+```
+
+Use it from your app module:
+
+```kotlin
+dependencies {
+    implementation(libs.epiccrown.jetpack.image)
+}
+```
+
+`com.epiccrown` requires the JitPack custom domain mapping for `epiccrown.com`. Configure a DNS TXT record for `git.epiccrown.com` pointing to `https://github.com/Orthoepiccrown0`, then build the tag at `https://jitpack.io/#com.epiccrown/jetpack-zoomable-image`.
 
 ## Basic Usage
 
